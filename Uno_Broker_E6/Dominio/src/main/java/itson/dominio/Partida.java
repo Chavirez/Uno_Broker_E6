@@ -4,10 +4,10 @@
  */
 package itson.dominio;
 
+import itson.dominio.Interfaces.ObservadorPartida;
 import itson.dominio.enums.*;
 import itson.dominio.tiposCarta.accionesCarta.*;
 import itson.dominio.tiposCarta.*;
-import itson.observadorpartida.IObservadorPartida;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class Partida {
     private RestriccionTurno restriccionTurno;
     private ReglaUNO reglaUNO;
     private List<Jugada> jugadas;
-    private List<IObservadorPartida> observadores;
+    private List<ObservadorPartida> observadores;
 
     public Partida(String id, List<Jugador> jugadores, Mazo mazo) {
         this.id = id;
@@ -47,17 +47,17 @@ public class Partida {
         return jugadores.get(indiceTurno);
     }
 
-    public void agregarObservador(IObservadorPartida observador) {
+    public void agregarObservador(ObservadorPartida observador) {
             this.observadores.add(observador);
             observador.actualizarEstado(this); 
         }
 
-    public void removerObservador(IObservadorPartida observador) {
+    public void removerObservador(ObservadorPartida observador) {
         this.observadores.remove(observador);
     }
 
     private void notificarObservadores() {
-        for (IObservadorPartida obs : observadores) {
+        for (ObservadorPartida obs : observadores) {
             obs.actualizarEstado(this);
         }
     }

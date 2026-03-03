@@ -8,7 +8,6 @@
     <modules>
         <module>Dominio</module>
         <module>MVC</module>
-        <module>ObservadorPartida</module>
         <module>Ensamblador</module>
     </modules>
     <properties>
