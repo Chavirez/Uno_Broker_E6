@@ -7,12 +7,10 @@ import itson.dominio.tiposCarta.CartaAccion;
 
 public class Toma4 extends CartaAccion {
     public Toma4(String id) {
-        super(id, Color.NEGRO, true); // Es comodín por definición
+        super(id, Color.NEGRO, true); 
     }
-
     @Override
     public void ejecutar(Partida partida) {
-        partida.getRestriccion().acumularToma(4);
-        // Aquí la partida también debería solicitar al jugador elegir un color
+        partida.getRestriccionTurno().acumularToma(4);
     }
 }

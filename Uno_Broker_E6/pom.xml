@@ -7,6 +7,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>Dominio</module>
+        <module>MVC</module>
+        <module>ObservadorPartida</module>
+        <module>Ensamblador</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -7,6 +7,7 @@ package itson.dominio;
 import itson.dominio.enums.*;
 import itson.dominio.tiposCarta.accionesCarta.*;
 import itson.dominio.tiposCarta.*;
+import itson.observadorpartida.IObservadorPartida;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class Partida {
     private RestriccionTurno restriccionTurno;
     private ReglaUNO reglaUNO;
     private List<Jugada> jugadas;
+    private List<IObservadorPartida> observadores;
 
     public Partida(String id, List<Jugador> jugadores, Mazo mazo) {
         this.id = id;
@@ -38,12 +40,28 @@ public class Partida {
         this.estado = EstadoPartida.EN_CURSO;
         this.direccion = Direccion.HORARIO;
         this.indiceTurno = 0;
+        this.observadores = new ArrayList<>();
     }
 
     public Jugador obtenerJugadorActual() {
         return jugadores.get(indiceTurno);
     }
 
+    public void agregarObservador(IObservadorPartida observador) {
+            this.observadores.add(observador);
+            observador.actualizarEstado(this); 
+        }
+
+    public void removerObservador(IObservadorPartida observador) {
+        this.observadores.remove(observador);
+    }
+
+    private void notificarObservadores() {
+        for (IObservadorPartida obs : observadores) {
+            obs.actualizarEstado(this);
+        }
+    }
+    
     public void jugarCarta(String idJugador, int indiceCarta) {
         Jugador jugador = obtenerJugadorActual();
 
@@ -76,6 +94,9 @@ public class Partida {
             turno.avanzar(jugadores.size(), direccion);
             this.indiceTurno = turno.getNumero();
         }
+        
+        notificarObservadores();
+        
     }
 
     public void robarCarta(String idJugador) {
@@ -106,6 +127,8 @@ public class Partida {
 
         turno.avanzar(jugadores.size(), direccion);
         this.indiceTurno = turno.getNumero();
+        
+        notificarObservadores();
     }
 
     public void elegirColor(String idJugador, Color color) {
@@ -119,6 +142,7 @@ public class Partida {
 
         Jugada jugada = new Jugada(TipoJugada.ELEGIR_COLOR, System.currentTimeMillis(), idJugador, "Eligió el color " + color.name());
         this.jugadas.add(jugada);
+        
     }
 
     public void terminarPartida() {
@@ -142,4 +166,5 @@ public class Partida {
     public PilaDescarte getPilaDescarte() { return pilaDescarte; }
     public Mazo getMazo() { return mazo; }
     public List<Jugada> getJugadas() { return jugadas; }
+    public List<Jugador> getJugadores() { return jugadores; }
 }
