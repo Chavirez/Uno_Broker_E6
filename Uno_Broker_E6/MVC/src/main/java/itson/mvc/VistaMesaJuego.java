@@ -7,12 +7,12 @@ package itson.mvc;
 import itson.dominio.Carta;
 import itson.dominio.Jugador;
 import itson.dominio.Partida;
-import itson.dominio.observador.ObservadorPartida;
+import itson.observadorpartida.IObservadorPartida;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class VistaMesaJuego extends JFrame implements ObservadorPartida {
+public class VistaMesaJuego extends JFrame implements IObservadorPartida {
 
     private ControladorPartida controlador;
     private String miIdJugador; // El ID del jugador que está usando esta ventana
